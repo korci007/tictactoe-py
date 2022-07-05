@@ -67,8 +67,14 @@ def user_choice(player, db):
 def party_finished(player, player_moves):
     win_patterns = ({1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7})
     for pattern in win_patterns:
+        # check if one of the winning paters is a subset of the moves from one of the players
+        # using sets so the input order does not matter
         if pattern.issubset(set(player_moves[player])):
             print(f'Player {player[1]} wins!')
+            return True
+        # check to see if the game was a draw
+        elif len(player_moves[player]) == 5:
+            print('The game was a draw!')
             return True
     return False
 
@@ -97,9 +103,8 @@ def party():
     order = chose_player()
 
     # here comes the game loop: draw, chose, test
-    party_on = True
     display_board(moves, order)
-    while party_on:
+    while True:
         user_choice(order[0], moves)
         display_board(moves, order)
         if party_finished(order[0], moves):
