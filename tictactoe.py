@@ -1,5 +1,4 @@
 import os
-from xml.dom import UserDataHandler
 
 def clean():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -15,36 +14,33 @@ def chose_player():
     print(f"\nPlayer 1 has chosen option {choice!r}.") 
     
     if choice == 'X':
-        return ('P1','P2')
+        return 'P1','P2'
     else:
-        return ('P2','P1')
+        return 'P2','P1'
 
 
-def display_board(movedb):
+def display_board(move_db):
     clean()
-    print(f"Player 1 moves: { movedb['P1'] }")
-    print(f"Player 2 moves: { movedb['P2'] }")
+    print(f"Player 1 moves: { move_db['P1'] }")
+    print(f"Player 2 moves: { move_db['P2'] }")
 
 
-def user_choice(player, movedb):
+def user_choice(player, db):
     valid_options = list(range(1,10))
     valid_input = False
 
     while not valid_input:
         move = int(input('Enter a move: '))
-        if move in valid_options and move not in movedb[player]:      
-            movedb[player].append(move)
+        if move in valid_options and move not in db[player]:
+            db[player].append(move)
             valid_input = True
         else:
             print('Move not valid (1-9)')
-    return movedb
+    return db
    
 
-
+# If someone won, the party is finished. Check moves against the winning patters.
 def party_finished(player,player_moves):
-    '''
-    If someone won, the party is finished. Check moves against the winning patters.
-    '''
     win_patterns = ({1,2,3},{4,5,6},{7,8,9},{1,4,7},{2,5,8},{3,6,9},{1,5,9},{3,5,7})
     for pattern in win_patterns:
         if pattern.issubset(set(player_moves[player])):
@@ -52,11 +48,8 @@ def party_finished(player,player_moves):
             return True
     return False
 
-
+#  Check if the players want to start a new game.
 def finish_playing():
-    '''
-    Check if the players want to start a new game.
-    '''
     options = ['Yes','No']
     play_more = 'WRONG'
     while play_more not in options:
@@ -71,7 +64,7 @@ def finish_playing():
                 return False
 
 def party():
-    # recod all the moves players make
+    # record all the moves players make
     moves = {'P1':[],'P2':[]}
     # determine the order
     order = chose_player()
