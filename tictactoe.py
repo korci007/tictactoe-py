@@ -89,11 +89,11 @@ def party():
     #here comes the game loop: draw, chose, test
     party_on = True
     while party_on:
-        display_board(p1_moves,p2_moves)
-        user_choice(order[0])
-        party_finished()
-        user_choice(order[1])
-        party_finished()
+        #display_board(p1_moves,p2_moves)
+        #user_choice(order[0])
+        #party_finished()
+        #user_choice(order[1])
+        #party_finished()
 
 
 # Game starts here    
