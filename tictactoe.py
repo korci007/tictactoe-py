@@ -21,10 +21,27 @@ def chose_player():
         return 'P2', 'P1'
 
 
-def display_board(move_db):
+def display_board(move_db, order):
     clean()
-    print(f"Player 1 moves: {move_db['P1']}")
-    print(f"Player 2 moves: {move_db['P2']}")
+    row_a = [' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' \n']
+    row_b = ['-', '-', '-', '|', '-', '-', '-', '|', '-', '-', '-\n']
+    board = [row_a[:], row_a[:], row_a[:], row_b[:],
+             row_a[:], row_a[:], row_a[:], row_b[:],
+             row_a[:], row_a[:], row_a[:]]
+    positions = {1: [9, 1], 2: [9, 5], 3: [9, 9],
+                 4: [5, 1], 5: [5, 5], 6: [5, 9],
+                 7: [1, 1], 8: [1, 5], 9: [1, 9]}
+
+    for move in move_db[order[0]]:
+        board[positions[move][0]][positions[move][1]] = 'X'
+
+    for move in move_db[order[1]]:
+        board[positions[move][0]][positions[move][1]] = 'O'
+
+    str_out = ''
+    for place in board:
+        str_out += ''.join(place)
+    print(str_out)
 
 
 def user_choice(player, db):
@@ -61,7 +78,7 @@ def finish_playing():
             print("Please enter 'Yes' or 'No' : ")
         else:
             if play_more == 'No':
-                print('Good Bye!')
+                print('\nGood Bye\n!')
                 return True
             else:
                 return False
@@ -76,14 +93,14 @@ def party():
 
     # here comes the game loop: draw, chose, test
     party_on = True
-    display_board(moves)
+    display_board(moves, order)
     while party_on:
         user_choice(order[0], moves)
-        display_board(moves)
+        display_board(moves, order)
         if party_finished(order[0], moves):
             break
         user_choice(order[1], moves)
-        display_board(moves)
+        display_board(moves, order)
         if party_finished(order[1], moves):
             break
 
@@ -100,8 +117,8 @@ while True:
 # Test are
 # moves = {'P1':[1,2],'P2':[7]}
 # order = ('P1','P2')
-
-# print(moves.values())
+#
+# display_board(moves, order)
 
 # user_choice(order[0],moves)
 
