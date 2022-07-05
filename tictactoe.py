@@ -20,27 +20,35 @@ def chose_player():
         return ('P2','P1')
 
 
-def display_board(p1,p2):
+def display_board(movedb):
     clean()
-    print(f'Player 1 moves: {p1}')
-    print(f'Player 2 moves: {p2}')
+    print(f"Player 1 moves: { movedb['P1'] }")
+    print(f"Player 2 moves: { movedb['P2'] }")
 
 
 def user_choice(player, movedb):
-    move = int(input('Enter a move: '))
-    movedb[player].append(move)
+    valid_options = list(range(1,10))
+    valid_input = False
+
+    while not valid_input:
+        move = int(input('Enter a move: '))
+        if move in valid_options and move not in movedb[player]:      
+            movedb[player].append(move)
+            valid_input = True
+        else:
+            print('Move not valid (1-9)')
     return movedb
    
 
 
-def party_finished(player_moves):
+def party_finished(player,player_moves):
     '''
     If someone won, the party is finished. Check moves against the winning patters.
     '''
     win_patterns = ({1,2,3},{4,5,6},{7,8,9},{1,4,7},{2,5,8},{3,6,9},{1,5,9},{3,5,7})
     for pattern in win_patterns:
-        if pattern.issubset(set(player_moves)):
-            print('Player wins!')
+        if pattern.issubset(set(player_moves[player])):
+            print(f'Player {player} wins!')
             return True
     return False
 
@@ -71,15 +79,17 @@ def party():
     #here comes the game loop: draw, chose, test
     party_on = True
     while party_on:
-        display_board(p1_moves,p2_moves)
+        display_board(moves)
         user_choice(order[0], moves)
-        #party_finished()
+        display_board(moves)
+        party_finished(order[0],moves)
         user_choice(order[1], moves)
-        #party_finished()
+        display_board(moves)
+        party_finished(order[1],moves)
 
 
 # Game starts here    
-game_on = False
+game_on = True
 
 while game_on: 
     clean()
@@ -89,8 +99,12 @@ while game_on:
     if finish_playing():
         break
 
-#Test are
-moves = {'P1':[],'P2':[]}
-order = ('P1','P2')
+##Test are
+#moves = {'P1':[1,2],'P2':[7]}
+#order = ('P1','P2')
 
-user_choice(order[0],moves)
+#print(moves.values())
+
+#user_choice(order[0],moves)
+
+#print(moves)
