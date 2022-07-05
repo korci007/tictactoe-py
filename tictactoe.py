@@ -32,7 +32,7 @@ def user_choice(player, db):
     valid_input = False
 
     while not valid_input:
-        move = int(input('Enter a move: '))
+        move = int(input(f'{player} please enter a move: '))
         if move in valid_options and move not in db[player]:
             db[player].append(move)
             valid_input = True
@@ -46,7 +46,7 @@ def party_finished(player, player_moves):
     win_patterns = ({1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7})
     for pattern in win_patterns:
         if pattern.issubset(set(player_moves[player])):
-            print(f'Player {player} wins!')
+            print(f'Player {player[1]} wins!')
             return True
     return False
 
@@ -76,8 +76,8 @@ def party():
 
     # here comes the game loop: draw, chose, test
     party_on = True
+    display_board(moves)
     while party_on:
-        display_board(moves)
         user_choice(order[0], moves)
         display_board(moves)
         if party_finished(order[0], moves):
