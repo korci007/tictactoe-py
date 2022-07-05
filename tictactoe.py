@@ -21,6 +21,7 @@ def chose_player():
         return 'P2', 'P1'
 
 
+# Drawing the board
 def display_board(move_db, order):
     clean()
     row_a = [' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' \n']
@@ -28,16 +29,20 @@ def display_board(move_db, order):
     board = [row_a[:], row_a[:], row_a[:], row_b[:],
              row_a[:], row_a[:], row_a[:], row_b[:],
              row_a[:], row_a[:], row_a[:]]
+    # coordinates for 'X' and 'O' placements
     positions = {1: [9, 1], 2: [9, 5], 3: [9, 9],
                  4: [5, 1], 5: [5, 5], 6: [5, 9],
                  7: [1, 1], 8: [1, 5], 9: [1, 9]}
 
+    # place 'X' on all his/her coordinates for the player who started first
     for move in move_db[order[0]]:
         board[positions[move][0]][positions[move][1]] = 'X'
 
+    # place 'O' for the player who started 2nd
     for move in move_db[order[1]]:
         board[positions[move][0]][positions[move][1]] = 'O'
 
+    # Draw the board
     str_out = ''
     for place in board:
         str_out += ''.join(place)
@@ -113,13 +118,3 @@ while True:
 
     if finish_playing():
         break
-
-# Test are
-# moves = {'P1':[1,2],'P2':[7]}
-# order = ('P1','P2')
-#
-# display_board(moves, order)
-
-# user_choice(order[0],moves)
-
-# print(moves)
