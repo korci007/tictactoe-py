@@ -5,6 +5,12 @@ def clean():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
+# Display a small guide
+def display_guide():
+    print('Placement positions for the game are:')
+    print('7|8|9\n4|5|6\n1|2|3')
+
+
 # returns the order of players
 def chose_player():
     valid_choices = ['X', 'O']
@@ -54,7 +60,8 @@ def user_choice(player, db):
     valid_input = False
 
     while not valid_input:
-        move = int(input(f'{player} please enter a move: '))
+        display_guide()
+        move = int(input(f'{player} please enter a move (1-9): '))
         if move in valid_options and move not in db[player]:
             db[player].append(move)
             valid_input = True
@@ -70,11 +77,11 @@ def party_finished(player, player_moves):
         # check if one of the winning paters is a subset of the moves from one of the players
         # using sets so the input order does not matter
         if pattern.issubset(set(player_moves[player])):
-            print(f'Player {player[1]} wins!')
+            print(f'Player {player[1]} wins!\n')
             return True
         # check to see if the game was a draw
         elif len(player_moves[player]) == 5:
-            print('The game was a draw!')
+            print('The game was a draw!\n')
             return True
     return False
 
@@ -84,12 +91,12 @@ def finish_playing():
     options = ['Yes', 'No']
     play_more = 'WRONG'
     while play_more not in options:
-        play_more = input("Do you want to play another game? (Yes/No) :")
+        play_more = input("Do you want to play another game? (Yes/No) : ")
         if play_more not in options:
             print("Please enter 'Yes' or 'No' : ")
         else:
             if play_more == 'No':
-                print('\nGood Bye\n!')
+                print('\nSee you next time!\n')
                 return True
             else:
                 return False
