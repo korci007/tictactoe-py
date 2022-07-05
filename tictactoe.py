@@ -89,9 +89,7 @@ def party():
 
 
 # Game starts here    
-game_on = True
-
-while game_on:
+while True:
     clean()
 
     party()
