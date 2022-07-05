@@ -1,5 +1,7 @@
-from os import system
+import os
 
+def clean():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def chose_player():
     '''
@@ -41,7 +43,7 @@ def set_player(value,player):
 
 
 def display_board(p1,p2):
-    system('clear')
+    clean()
     print(f'Player 1 moves: {p1}')
     print(f'Player 2 moves: {p2}')
 
@@ -89,7 +91,8 @@ def party():
     #here comes the game loop: draw, chose, test
     party_on = True
     while party_on:
-        #display_board(p1_moves,p2_moves)
+        display_board(p1_moves,p2_moves)
+        break
         #user_choice(order[0])
         #party_finished()
         #user_choice(order[1])
@@ -98,10 +101,10 @@ def party():
 
 # Game starts here    
 game_on = True
-while game_on: 
-    system('clear')
-    game_on = True
 
+while game_on: 
+    clean()
+    
     party()
 
     if finish_playing():
